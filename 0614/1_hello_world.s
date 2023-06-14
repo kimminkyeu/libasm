@@ -52,6 +52,7 @@ _main:
     ; prints 'hello, world'
 
     ; now, var5 contains the address of string 'hello world'.
+    ; https://www.tutorialspoint.com/assembly_programming/assembly_addressing_modes.htm
     mov var5, [var4]
     ; mov qword var5, qword 'bibye' ; change 'hello' to 'bibye'
 
@@ -66,6 +67,6 @@ _main:
     mov rdi, 1              ; exit code 0
     syscall
     ; exit 0
-
+로로그그아웃을생활화하자
 ; 1. How to Print Integer in decimal?
 ; https://stackoverflow.com/questions/13166064/how-do-i-print-an-integer-in-assembly-level-programming-without-printf-from-the

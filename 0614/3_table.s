@@ -8,3 +8,4 @@ section .text
 _main:
     xor rbx, rbx
     mov bl, byte [BYTE_TABLE]
+    
