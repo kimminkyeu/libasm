@@ -1,6 +1,6 @@
 
 ### General Purpose Registers
-|           RAX                  | --> 64bit
+|           RAX                  |  --> 64bit
               |       EAX        |  -->  32bit
                        |   AX    |  -->  16bit
                        | AH | AL |  -->  8bit each
@@ -76,3 +76,22 @@ An assembly program can be divided into three sections
 1. db, dw, dd, dq : 메모리 공간과 초기 값을 지정 (ex. "message db 1" : 1byte 크기 message변수를 1로 초기화)
 
 2. resb, resw, resd, resq : 메모리 공간만을 정의 (초기화 x, .bss 세그먼트에서 사용)
+
+### Arithmetic Instructions
+- https://www.tutorialspoint.com/assembly_programming/assembly_arithmetic_instructions.htm
+- add, sub, mul, imul, div, idiv ...
+- mul  / div   : 부호없는 곱셈/나눗셈
+- imul / idiv  : 부호있는 곱셈/나눗셈
+
+### Logical Instructions (이 연산 결과는 FlAGS register에 저장됨)
+- AND
+- OR
+- XOR
+- TEST
+- NOT
+
+## 0617 찾은 학습자료
+- https://courses.ics.hawaii.edu/ReviewICS312/morea/FirstProgram/ics312_nasm_first_program.pdf
+- 깔끔한 PPT로 정리되어 있어서 보기 좋음.
+- 이건 하던 것
+- https://www.tutorialspoint.com/assembly_programming/assembly_logical_instructions.htm
