@@ -95,3 +95,17 @@ An assembly program can be divided into three sections
 - 깔끔한 PPT로 정리되어 있어서 보기 좋음.
 - 이건 하던 것
 - https://www.tutorialspoint.com/assembly_programming/assembly_logical_instructions.htm
+
+### Local Label
+- https://www.tortall.net/projects/yasm/manual/html/nasm-local-label.html
+- some_local_label의 이름이 같아도, 이름충돌이 나지 않음.
+my_label:
+  .some_local_label:
+  ; ...
+my_label2:
+  .some_local_label:
+  ; ...
+
+how to access.
+  --> jmp my_label2.some_local_label
+

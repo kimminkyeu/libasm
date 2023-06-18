@@ -1,0 +1,90 @@
+
+odd:     file format elf64-x86-64
+
+
+Disassembly of section .text:
+
+0000000000401000 <_start>:
+  401000:	b8 01 00 00 00       	mov    $0x1,%eax
+  401005:	bf 01 00 00 00       	mov    $0x1,%edi
+  40100a:	48 be 00 20 40 00 00 	movabs $0x402000,%rsi
+  401011:	00 00 00 
+  401014:	ba 18 00 00 00       	mov    $0x18,%edx
+  401019:	0f 05                	syscall 
+  40101b:	b8 00 00 00 00       	mov    $0x0,%eax
+  401020:	bf 00 00 00 00       	mov    $0x0,%edi
+  401025:	48 be 44 20 40 00 00 	movabs $0x402044,%rsi
+  40102c:	00 00 00 
+  40102f:	ba 01 00 00 00       	mov    $0x1,%edx
+  401034:	0f 05                	syscall 
+  401036:	48 31 c0             	xor    %rax,%rax
+  401039:	48 8b 04 25 44 20 40 	mov    0x402044,%rax
+  401040:	00 
+  401041:	48 a9 01 00 00 00    	test   $0x1,%rax
+  401047:	75 0e                	jne    401057 <_start.handleOdd>
+  401049:	eb 29                	jmp    401074 <_start.handleEven>
+
+000000000040104b <..@exit_program>:
+  40104b:	b8 3c 00 00 00       	mov    $0x3c,%eax
+  401050:	bf 00 00 00 00       	mov    $0x0,%edi
+  401055:	0f 05                	syscall 
+
+0000000000401057 <_start.handleOdd>:
+  401057:	b8 01 00 00 00       	mov    $0x1,%eax
+  40105c:	bf 01 00 00 00       	mov    $0x1,%edi
+  401061:	48 be 28 20 40 00 00 	movabs $0x402028,%rsi
+  401068:	00 00 00 
+  40106b:	ba 0d 00 00 00       	mov    $0xd,%edx
+  401070:	0f 05                	syscall 
+  401072:	eb d7                	jmp    40104b <..@exit_program>
+
+0000000000401074 <_start.handleEven>:
+  401074:	b8 01 00 00 00       	mov    $0x1,%eax
+  401079:	bf 01 00 00 00       	mov    $0x1,%edi
+  40107e:	48 be 35 20 40 00 00 	movabs $0x402035,%rsi
+  401085:	00 00 00 
+  401088:	ba 0e 00 00 00       	mov    $0xe,%edx
+  40108d:	0f 05                	syscall 
+  40108f:	eb ba                	jmp    40104b <..@exit_program>
+
+Disassembly of section .data:
+
+0000000000402000 <msg1>:
+  402000:	65 6e                	outsb  %gs:(%rsi),(%dx)
+  402002:	74 65                	je     402069 <_end+0x21>
+  402004:	72 20                	jb     402026 <msg2+0xe>
+  402006:	6f                   	outsl  %ds:(%rsi),(%dx)
+  402007:	6e                   	outsb  %ds:(%rsi),(%dx)
+  402008:	65 20 64 69 67       	and    %ah,%gs:0x67(%rcx,%rbp,2)
+  40200d:	69 74 20 6e 75 6d 62 	imul   $0x65626d75,0x6e(%rax,%riz,1),%esi
+  402014:	65 
+  402015:	72 0a                	jb     402021 <msg2+0x9>
+	...
+
+0000000000402018 <msg2>:
+  402018:	79 6f                	jns    402089 <_end+0x41>
+  40201a:	75 72                	jne    40208e <_end+0x46>
+  40201c:	20 69 6e             	and    %ch,0x6e(%rcx)
+  40201f:	70 75                	jo     402096 <_end+0x4e>
+  402021:	74 20                	je     402043 <_edata>
+  402023:	69 73 3a 20 4e   	imul   $0x756e4e20,0x3a(%rbx),%esi
+
+0000000000402028 <msg_odd>:
+  402028:	6e                   	outsb  %ds:(%rsi),(%dx)
+  402029:	75 6d                	jne    402098 <_end+0x50>
+  40202b:	62                   	(bad)  
+  40202c:	65 72 20             	gs jb  40204f <_end+0x7>
+  40202f:	69 73 20 6f 64 64  	imul   $0x6e64646f,0x20(%rbx),%esi
+
+0000000000402035 <msg_even>:
+  402035:	6e                   	outsb  %ds:(%rsi),(%dx)
+  402036:	75 6d                	jne    4020a5 <_end+0x5d>
+  402038:	62                   	(bad)  
+  402039:	65 72 20             	gs jb  40205c <_end+0x14>
+  40203c:	69 73 20 65 76 65 6e 	imul   $0x6e657665,0x20(%rbx),%esi
+
+Disassembly of section .bss:
+
+0000000000402044 <buffer_byte>:
+  402044:	00 00                	add    %al,(%rax)
+	...

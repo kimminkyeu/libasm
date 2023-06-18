@@ -22,16 +22,24 @@ EXIT_FAILURE    equ 1
 SECTION .data
 	msg1	  db	'enter one digit number', 10, 0
 	msg1_len  equ	$ - msg1
-	msg2	  db	'your input is: N'
+	msg2	  db	'your input is: N' 
+	; 하고 싶은 것. -> 위 문자열의 N을 다른 문자로 대체하고 싶음.
 	msg2_len  equ	$ - msg2
+	msg_odd	 db 'number is odd'
+	msg_odd_len equ $ - msg_odd
+	msg_even db 'number is even'
+	msg_even_len equ $ - msg_even
 
 SECTION .bss
-	buffer resb 1
+	buffer_byte resb 1
+
+; https://www.nasm.us/xdoc/2.11.02/html/nasmdoc6.html
+; exporting Symbols to other modules
 
 SECTION .text
-	global _start
-
+global _start
 _start:
+
 	mov rax, SYS_WRITE ; print message
 	mov rdi, STDOUT
 	mov rsi, msg1
@@ -40,39 +48,46 @@ _start:
 
 	mov rax, SYS_READ ; get input
 	mov rdi, STDIN
-	mov rsi, buffer	  ; store data to cl
+	mov rsi, buffer_byte	  ; store data to cl
 	mov rdx, 1		  ; read 1 byte
 	syscall
 
-	; sub rcx, '0'	; change ascii to decimal
-	; dump_mem	0, buffer, 1
+	; check if buffer_byte is odd
+	xor rax, rax
+	mov rax, [buffer_byte]
 
-	; add concatenate input character(=:buffer) to msg2 string table
-	; mov [msg2 + 2], [buffer]
+	; test는 rax에 결과를 저장하지 않고, flag만 세팅함.
+	test rax, 1		; if 1, then flag zero sets to false
+	; if odd (test result is 1)
+	jnz	_start.handleOdd
+	; else (test result is 0)
+	jmp _start.handleEven
 
-	; mov rax, SYS_WRITE ; print your input
-	; mov rdi, STDOUT
-	; mov rsi, msg2
-	; mov rdx, msg2_len
-	; syscall
-
-	; mov rax, SYS_WRITE ; print your input
-	; mov rdi, STDOUT
-	; mov rsi, buffer
-	; mov rdx, 8
-	; syscall
-
-	jmp exit
-	
-
-; function exit
-exit:
+; global Label.
+..@exit_program:
 	mov rax, SYS_EXIT
 	mov rdi, EXIT_SUCCESS
 	syscall
 
-; 왜 sys_read를 rcx에 직접 넣으면 작동이 안되는가?
-; 그 이류를 막 찾던 도중 괜찮은 학습자료를 또 찾음.
+; Local Label assosiated to _start label
+.handleOdd:
+	mov rax, SYS_WRITE ; print message
+	mov rdi, STDOUT
+	mov rsi, msg_odd
+	mov rdx, msg_odd_len
+	syscall
+	jmp ..@exit_program
 
-; https://courses.ics.hawaii.edu/ReviewICS312/morea/FirstProgram/ics312_nasm_first_program.pdf
+; Local Label assosiated to _start label
+.handleEven:
+	mov rax, SYS_WRITE ; print message
+	mov rdi, STDOUT
+	mov rsi, msg_even
+	mov rdx, msg_even_len
+	syscall
+	jmp ..@exit_program
+
+
+; function exit
+
 
