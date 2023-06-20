@@ -5,6 +5,9 @@
 ; Parameters to functions are passed in the registers 
 ; rdi, rsi, rdx, rcx, r8, r9, 
 ; and further values are passed on the stack in reverse order.
+; ***********************************************
+; Modern x64 Assembly C calling Convention 
+;   https://www.youtube.com/watch?v=kjOcgG0FpNQ
 
 BITS 64
 
@@ -30,6 +33,4 @@ _asm_func:
     ret
 
 
-;;;;;
-; Modern x64 Assembly C calling Convention 
-;   https://www.youtube.com/watch?v=kjOcgG0FpNQ
+

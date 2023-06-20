@@ -1,3 +1,4 @@
+BITS 64    ; not needed, but it's for vim-syntastic plugin.
 section .data
 
 ; How to write constants
@@ -53,7 +54,6 @@ _main:
 
     ; now, var5 contains the address of string 'hello world'.
     ; https://www.tutorialspoint.com/assembly_programming/assembly_addressing_modes.htm
-    mov var5, [var4]
     ; mov qword var5, qword 'bibye' ; change 'hello' to 'bibye'
 
     mov rax, 0x02000004     ; write syscall
@@ -67,6 +67,5 @@ _main:
     mov rdi, 1              ; exit code 0
     syscall
     ; exit 0
-로로그그아웃을생활화하자
 ; 1. How to Print Integer in decimal?
 ; https://stackoverflow.com/questions/13166064/how-do-i-print-an-integer-in-assembly-level-programming-without-printf-from-the
