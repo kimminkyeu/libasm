@@ -84,11 +84,14 @@ An assembly program can be divided into three sections
 - imul / idiv  : 부호있는 곱셈/나눗셈
 
 ### Logical Instructions (이 연산 결과는 FlAGS register에 저장됨)
-- AND
-- OR
-- XOR
-- TEST
-- NOT
+- https://www.tutorialspoint.com/assembly_programming/assembly_conditions.htm
+
+  - [CMP]   A, B ( A - B 연산, 그러나 값을 바꾸진 않음. ) --> zero flag
+  - [TEST]  A, B ( A and B 연산, 그러나 값을 바꾸진 않음. )
+  - [AND] --> A에 연산 결과를 덮어 씀
+  - [OR] --> A에 덮어씀
+  - [XOR] --> A에 덮어씀
+  - [NOT] --> A에 덮어씀
 
 ## 0617 찾은 학습자료
 - https://courses.ics.hawaii.edu/ReviewICS312/morea/FirstProgram/ics312_nasm_first_program.pdf
@@ -109,3 +112,21 @@ my_label2:
 how to access.
   --> jmp my_label2.some_local_label
 
+
+### 접두사
+
+byte --> b 
+short --> 2byte --> w
+int --> 4byte --> d
+long --> 8byte --> q
+
+movb, movw, movl, movq의 4개 유형.
+pushq도 역시 64bit를 stack에 push한다는 말.
+
+### 명령어 (mov와의 차이)
+lea : (load effective address)
+
+- mov eax, dword ptr DS:[eax]
+  eax 레지스터에 들어있는 값(=?주소값) 을 Data segment에서 가져온다.
+  즉 eax는 여기서 포인터 역할.
+  .data 세그멘트의 특정 주소를 참조, 그 곳의 4byte 값ㅐ을 eax에 넣는 명령어

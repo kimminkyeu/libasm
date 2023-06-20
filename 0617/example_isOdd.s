@@ -57,7 +57,7 @@ _start:
 	mov rax, [buffer_byte]
 
 	; test는 rax에 결과를 저장하지 않고, flag만 세팅함.
-	test rax, 1		; if 1, then flag zero sets to false
+	test rax, 1		; if AND result is 1, then flag zero sets to false
 	; if odd (test result is 1)
 	jnz	_start.handleOdd
 	; else (test result is 0)

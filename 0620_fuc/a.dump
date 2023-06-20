@@ -1,0 +1,122 @@
+
+a.out:	file format Mach-O 64-bit x86-64
+
+
+Disassembly of section __TEXT,__text:
+
+0000000100003f20 _main:
+100003f20: 55                          	pushq	%rbp
+100003f21: 48 89 e5                    	movq	%rsp, %rbp
+100003f24: 48 83 ec 20                 	subq	$32, %rsp
+100003f28: c7 45 fc 00 00 00 00        	movl	$0, -4(%rbp)
+100003f2f: c7 45 f8 04 00 00 00        	movl	$4, -8(%rbp)
+100003f36: c7 45 f4 0a 00 00 00        	movl	$10, -12(%rbp)
+100003f3d: 8b 7d f8                    	movl	-8(%rbp), %edi
+100003f40: 8b 75 f4                    	movl	-12(%rbp), %esi
+100003f43: e8 21 00 00 00              	callq	33 <_asm_func>
+100003f48: 89 45 f0                    	movl	%eax, -16(%rbp)
+100003f4b: 8b 75 f0                    	movl	-16(%rbp), %esi
+100003f4e: 48 8d 3d 3d 00 00 00        	leaq	61(%rip), %rdi
+100003f55: b0 00                       	movb	$0, %al
+100003f57: e8 14 00 00 00              	callq	20 <SYS_EXIT+0x100003f34>
+100003f5c: 31 c9                       	xorl	%ecx, %ecx
+100003f5e: 89 45 ec                    	movl	%eax, -20(%rbp)
+100003f61: 89 c8                       	movl	%ecx, %eax
+100003f63: 48 83 c4 20                 	addq	$32, %rsp
+100003f67: 5d                          	popq	%rbp
+100003f68: c3                          	retq
+
+0000000100003f69 _asm_func:
+100003f69: 48 89 f8                    	movq	%rdi, %rax
+100003f6c: 48 01 f0                    	addq	%rsi, %rax
+
+Disassembly of section __TEXT,__stubs:
+
+0000000100003f70 __stubs:
+100003f70: ff 25 8a 40 00 00           	jmpq	*16522(%rip)
+
+Disassembly of section __TEXT,__stub_helper:
+
+0000000100003f78 __stub_helper:
+100003f78: 4c 8d 1d 89 40 00 00        	leaq	16521(%rip), %r11
+100003f7f: 41 53                       	pushq	%r11
+100003f81: ff 25 79 00 00 00           	jmpq	*121(%rip)
+100003f87: 90                          	nop
+100003f88: 68 00 00 00 00              	pushq	$0
+100003f8d: e9 e6 ff ff ff              	jmp	-26 <__stub_helper>
+
+Disassembly of section __TEXT,__cstring:
+
+0000000100003f92 __cstring:
+100003f92: 61                          	<unknown>
+100003f93: 73 6d                       	jae	109 <SYS_EXIT+0x100003fc6>
+100003f95: 5f                          	popq	%rdi
+100003f96: 66 75 6e                    	jne	110 <SYS_EXIT+0x100003fcb>
+100003f99: 63 28                       	movslq	(%rax), %ebp
+100003f9b: 29 27                       	subl	%esp, (%rdi)
+100003f9d: 73 20                       	jae	32 <SYS_EXIT+0x100003f83>
+100003f9f: 72 65                       	jb	101 <SYS_EXIT+0x100003fca>
+100003fa1: 73 75                       	jae	117 <SYS_EXIT+0x100003fdc>
+100003fa3: 6c                          	insb	%dx, %es:(%rdi)
+100003fa4: 74 3a                       	je	58 <SYS_EXIT+0x100003fa4>
+100003fa6: 20 25                       	<unknown>
+100003fa8: 64 0a 00                    	orb	%fs:(%rax), %al
+
+Disassembly of section __TEXT,__unwind_info:
+
+0000000100003fac __unwind_info:
+100003fac: 01 00                       	addl	%eax, (%rax)
+100003fae: 00 00                       	addb	%al, (%rax)
+100003fb0: 1c 00                       	sbbb	$0, %al
+100003fb2: 00 00                       	addb	%al, (%rax)
+100003fb4: 00 00                       	addb	%al, (%rax)
+100003fb6: 00 00                       	addb	%al, (%rax)
+100003fb8: 1c 00                       	sbbb	$0, %al
+100003fba: 00 00                       	addb	%al, (%rax)
+100003fbc: 00 00                       	addb	%al, (%rax)
+100003fbe: 00 00                       	addb	%al, (%rax)
+100003fc0: 1c 00                       	sbbb	$0, %al
+100003fc2: 00 00                       	addb	%al, (%rax)
+100003fc4: 02 00                       	addb	(%rax), %al
+100003fc6: 00 00                       	addb	%al, (%rax)
+100003fc8: 20 3f                       	andb	%bh, (%rdi)
+100003fca: 00 00                       	addb	%al, (%rax)
+100003fcc: 34 00                       	xorb	$0, %al
+100003fce: 00 00                       	addb	%al, (%rax)
+100003fd0: 34 00                       	xorb	$0, %al
+100003fd2: 00 00                       	addb	%al, (%rax)
+100003fd4: 70 3f                       	jo	63 <SYS_EXIT+0x100003fd9>
+100003fd6: 00 00                       	addb	%al, (%rax)
+100003fd8: 00 00                       	addb	%al, (%rax)
+100003fda: 00 00                       	addb	%al, (%rax)
+100003fdc: 34 00                       	xorb	$0, %al
+100003fde: 00 00                       	addb	%al, (%rax)
+100003fe0: 03 00                       	addl	(%rax), %eax
+100003fe2: 00 00                       	addb	%al, (%rax)
+100003fe4: 0c 00                       	orb	$0, %al
+100003fe6: 02 00                       	addb	(%rax), %al
+100003fe8: 14 00                       	adcb	$0, %al
+100003fea: 02 00                       	addb	(%rax), %al
+100003fec: 00 00                       	addb	%al, (%rax)
+100003fee: 00 01                       	addb	%al, (%rcx)
+100003ff0: 49 00 00                    	addb	%al, (%r8)
+		...
+100003ffb: 01                          	<unknown>
+
+Disassembly of section __DATA_CONST,__got:
+
+0000000100004000 __got:
+		...
+
+Disassembly of section __DATA,__la_symbol_ptr:
+
+0000000100008000 __la_symbol_ptr:
+100008000: 88 3f                       	movb	%bh, (%rdi)
+100008002: 00 00                       	addb	%al, (%rax)
+100008004: 01 00                       	addl	%eax, (%rax)
+100008006: 00 00                       	addb	%al, (%rax)
+
+Disassembly of section __DATA,__data:
+
+0000000100008008 __dyld_private:
+		...
