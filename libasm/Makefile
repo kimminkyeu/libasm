@@ -16,7 +16,7 @@ INCLUDE         = include
 RM              = rm -f
 AR              = ar rcs
 
-SRC        		= ft_strlen.s ft_strcpy.s \
+SRC        		= ft_strlen.s ft_strcpy.s ft_write.s\
 
 OBJ 			= $(SRC:s=o)
 

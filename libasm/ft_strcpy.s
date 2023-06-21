@@ -1,8 +1,16 @@
+; ***********************************************
+;                     [rdi]          [rsi]
+; char * strcpy(char * dst, const char * src)
+; {
+;     char * dst_start = dst;
+;     while (*(src))
+;         *(dst++) = *(src++);
+;     return dst_start;
+; }
+; ***********************************************
 
 BITS 64
 
-;                     [rdi]          [rsi]
-; char * strcpy(char * dst, const char * src)
 section .text
     global _ft_strcpy
 
@@ -13,8 +21,6 @@ _ft_strcpy:
     mov qword [rbp - 16], rsi ; second argument
     mov rax, qword [rbp - 8] ; char * src
     mov qword [rbp - 24], rax ; copy local variable (tmp)
-    ; or i can just...
-   ;  lea qword [rbp - 24], qword [rbp - 8];
 
  .PROC_CHECK_NULL:
     mov rax, qword [rbp - 16]; ; char * src

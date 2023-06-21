@@ -1,3 +1,7 @@
+; ******************************************
+; extern size_t ft_strlen(const char* str);
+; ******************************************
+
 BITS 64 ; for vim syntastic
 
 section .text

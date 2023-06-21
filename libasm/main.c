@@ -1,9 +1,14 @@
 #include <stddef.h>
 #include <stdio.h>
+#include <unistd.h>
 #include <string.h>
+#include <errno.h>
 
 extern size_t ft_strlen(const char* str);
 extern char * ft_strcpy(char * dst, const char * src);
+extern ssize_t ft_write(int fd, const void *buf, size_t count);
+extern ssize_t ft_read(int fd, void *buf, size_t count); 
+extern char * strdup(const char *s);
 
 int main(void) {
 	{
@@ -30,7 +35,15 @@ int main(void) {
 	}
 
 	{
-
+		printf("----------------------------\n");
+		printf("|  ft_write                |\n");
+		printf("----------------------------\n");
+		ssize_t ret1 = write(-1, "hello\n", 6);
+		perror("write");
+		fprintf(stderr, "Return value of    write: %zd\n", ret1);
+		ssize_t ret2 = ft_write(-1, "hello\n", 6);
+		fprintf(stderr, "Return value of ft_write: %zd\n", ret2);
+		perror("ft_write");
 	}
 
 	return (0);
