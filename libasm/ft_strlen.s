@@ -9,7 +9,7 @@ BITS 64 ; for vim syntastic
 
 ; 미해결 의문범.
 ; rsp 초기값에는 return addr이 들어가는게 확실함. (그래서 rbp - 0)에 값 넣으니 터지는 거였음.
-; 그럼
+; 그럼 왜 어떤 경우는 rbp - 4이고, 어떤 경우는 rbp - 8인 거야...
 
 
 section .text
