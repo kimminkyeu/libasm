@@ -36,12 +36,12 @@ int main(void) {
 		printf("|  ft_strlen               |\n");
 		printf("----------------------------\n");
 		const char *str = "Welcome to 42 Assembly language!";
+		// const char *str = "123455";
 		printf("[ strlen ]     %s : length is %zd\n", str,  strlen(str));
 		printf("[ ft_strlen ]  %s : length is %zd\n", str,  FT_STRLEN(str));
 	}
 
 	/*
-	 *
 	{
 		printf("----------------------------\n");
 		printf("|  ft_strcpy               |\n");
