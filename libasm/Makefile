@@ -14,7 +14,7 @@ NAME            = libasm.a
 NASM			= nasm -f $(NASM_FILE_FORMAT)
 INCLUDE         = include
 RM              = rm -f
-AR              = ar rcs
+AR              = ar rcs 
 
 SRC        		= ft_strlen.s ft_strcpy.s ft_write.s\
 

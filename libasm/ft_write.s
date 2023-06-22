@@ -4,16 +4,25 @@
 ; extern ssize_t ft_write(int fd, const void *buf, size_t count);
 ; ***************************************************************
 
-
 ; Using "call ___error" allows to 
 ; return a int* that point on the variable Errno. 
 ; So the solution is to modify the byte pointed by Rax
 ; after use of call ___error.
-extern  ___error
+
+extern  __errno_location ; defined in linux errno.h header
+; %define GET_ERRNO_PTR __errno_location
+
+; ***********************************************************
+; IF MACOS
+; extern  ___error ; defined in freeBSD errno.h header
+; %define GET_ERRNO_PTR ___error
+; ***********************************************************
+
 ; - https://stackoverflow.com/questions/15304829/how-to-return-errno-in-assembly
 ; - https://github.com/freebsd/freebsd-src/blob/master/sys/sys/errno.h
 
 %define EFAULT 14
+BITS 64
 
 section .data
     ; 이 부분이 section .data 하위 라벨로 넣어야 하는건지...?
@@ -64,12 +73,12 @@ _ft_write:
     jnc _ft_write.PROC_END ; if CF not set, then jump to end
 
  .PROC_SET_ERRNO:
-    mov qword [rbp - 32], rax ; syscall returns errno int value?
-    ; mov r15, rax
-    call ___error ; after calling ___error, rax is set to int*
-    ; mov [rax], r15
-    mov rcx, qword [rbp - 32]
-    mov qword [rax], rcx
+    ; mov qword [rbp - 32], rax ; syscall returns errno int value?
+    mov r15, rax
+    call __errno_location ; after calling ___error, rax is set to int*
+    mov [rax], r15
+    ; mov rcx, qword [rbp - 32]
+    ; mov qword [rax], rcx
     mov rax, -1 ; return은 -1을 하긴 해야 함.
 
  .PROC_END:
