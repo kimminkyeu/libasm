@@ -5,7 +5,6 @@
 #include <errno.h>
 
 
-
 #ifdef __linux__
 	#define FT_STRLEN(x)		_ft_strlen(x)
 	#define FT_STRCPY(x, y)		_ft_strcpy(x, y)
@@ -32,7 +31,6 @@
 
 
 int main(void) {
-	/*
 	{
 		printf("----------------------------\n");
 		printf("|  ft_strlen               |\n");
@@ -42,6 +40,8 @@ int main(void) {
 		printf("[ ft_strlen ]  %s : length is %zd\n", str,  FT_STRLEN(str));
 	}
 
+	/*
+	 *
 	{
 		printf("----------------------------\n");
 		printf("|  ft_strcpy               |\n");
@@ -55,7 +55,6 @@ int main(void) {
 		FT_STRCPY(dst, str);
 		printf("After  : %s\n", dst);
 	}
-	*/
 
 	{
 		printf("----------------------------\n");
@@ -68,6 +67,7 @@ int main(void) {
 		fprintf(stderr, "Return value of ft_write: %zd\n", ret2);
 		perror("ft_write");
 	}
+	*/
 
 	return (0);
 }

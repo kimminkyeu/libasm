@@ -1,26 +1,32 @@
-; ******************************************
-; extern size_t ft_strlen(const char* str);
-; ******************************************
+
+; size_t ft_strlen(const char* str) {
+;	size_t cnt = 0;
+; 	while (*(str++)) cnt++;
+;	return cnt;
+; }
 
 BITS 64 ; for vim syntastic
 
 section .text
 	global _ft_strlen
 _ft_strlen:
-	push rbp
-	mov qword [rbp - 8], rdi
-	mov qword [rbp - 16], 0
+	push rbp ; save parent's first stack frame address
+	mov rbp, rsp ; set self's first stack frame
+	sub rsp, 16 ; decrement stack ptr by 16 byte
+	mov qword [rbp - 0], rdi ; char* str_ptr = str
+	mov qword [rbp - 8], 0 ; size_t cnt = 0
  .PROC_CHECK_NULL:
-	mov rax, qword [rbp - 8]
-	mov rcx, qword [rbp - 16]
-	cmp byte [rax + rcx], 0
-	je  _ft_strlen.PROC_RETURN_LEN
+	mov rax, qword [rbp - 0] ; str_ptr
+	mov rcx, qword [rbp - 8] ; cnt
+	cmp byte [rax + rcx], 0	 ; if (*(str_ptr + cnt) === '/0')
+	je  _ft_strlen.PROC_RETURN_LEN ; jump to .PROC_RETURN_LEN
  .PROC_INCREMENT_COUNT:  
-	mov rax, qword [rbp - 16]
-	add rax, 1
-	mov qword [rbp - 16], rax
+	mov rax, qword [rbp - 8] ; rax = cnt
+	add rax, 1 ; rax++
+	mov qword [rbp - 8], rax ; cnt = rax
 	jmp _ft_strlen.PROC_CHECK_NULL
  .PROC_RETURN_LEN:
-	mov rax, qword [rbp - 16]
-	pop rbp 
-	ret
+	mov rax, qword [rbp - 8] ; return value
+	add rsp, 16 ; increment stack ptr by 16 byte ( = pop )
+	pop rbp ; clear stack
+	ret 
