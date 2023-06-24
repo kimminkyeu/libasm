@@ -36,7 +36,6 @@ int main(void) {
 		printf("|  ft_strlen               |\n");
 		printf("----------------------------\n");
 		const char *str = "Welcome to 42 Assembly language!";
-		// const char *str = "123455";
 		printf("[ strlen ]     %s : length is %zd\n", str,  strlen(str));
 		printf("[ ft_strlen ]  %s : length is %zd\n", str,  FT_STRLEN(str));
 	}
@@ -55,19 +54,27 @@ int main(void) {
 		FT_STRCPY(dst, str);
 		printf("After  : %s\n", dst);
 	}
+	*/
 
 	{
 		printf("----------------------------\n");
-		printf("|  ft_write                |\n");
+		printf("|  ft_write - with fd(-1)  |\n");
 		printf("----------------------------\n");
 		ssize_t ret1 = write(-1, "hello\n", 6);
-		perror("write");
 		fprintf(stderr, "Return value of    write: %zd\n", ret1);
 		ssize_t ret2 = FT_WRITE(-1, "hello\n", 6);
 		fprintf(stderr, "Return value of ft_write: %zd\n", ret2);
-		perror("ft_write");
 	}
-	*/
+	{
+		printf("----------------------------\n");
+		printf("|  ft_write - with fd(1)  |\n");
+		printf("----------------------------\n");
+		ssize_t ret1 = write(1, "hello\n", 6);
+		fprintf(stderr, "Return value of    write: %zd\n", ret1);
+		ssize_t ret2 = FT_WRITE(1, "hello\n", 6);
+		fprintf(stderr, "Return value of ft_write: %zd\n", ret2);
+	}
+
 
 	return (0);
 }

@@ -5,13 +5,15 @@
 UNAME_S := $(shell uname -s)
 ifeq ($(UNAME_S),Linux) # LINUX
 	NASM_FILE_FORMAT = elf64
+	OS_TYPE = __linux__ # nasm에서 system macro 정의가 안되있기 때문.
 endif
 ifeq ($(UNAME_S),Darwin) # MACOS
 	NASM_FILE_FORMAT = macho64
+	OS_TYPE = __APPLE__ # nasm에서 system macro 정의가 안되있기 때문.
 endif
 
 NAME            = libasm.a
-NASM			= nasm -f $(NASM_FILE_FORMAT)
+NASM			= nasm -f $(NASM_FILE_FORMAT) -d ${OS_TYPE}
 INCLUDE         = include
 RM              = rm -f
 AR              = ar rcs 
