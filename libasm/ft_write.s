@@ -41,12 +41,12 @@ _ft_write:
     jnc _ft_write.PROC_END ; if CF not set, then jump to end
  .PROC_SET_ERRNO:
     sub rsp, 8
-    mov qword [rbp - 32], rax ; syscall result saved in rax
-    mov rbx, rax ; save syscall return value
+    mov qword [rbp - 32], rax ; save syscall result
     call GET_ERRNO_PTR ; after calling ___error, rax is set to int*
-    mov rcx, qword [rbp - 32] ; save syscall result to rcx
+    ; 어떤 errno를 세팅하지?
+    mov rax, qword [rbp - 32] ; save syscall result to rcx
     add rsp, 8
-    mov rax, -1
+    ; mov rax, -1 ; set return value
  .PROC_END: ; (4) Clean-up stack frame
     add rsp, 32
     pop rbp
