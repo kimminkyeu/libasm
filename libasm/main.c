@@ -1,8 +1,10 @@
 #include <stddef.h>
 #include <stdio.h>
+#include <strings.h>
 #include <unistd.h>
 #include <string.h>
 #include <errno.h>
+#include <stdlib.h>
 
 
 #ifdef __linux__
@@ -40,7 +42,6 @@ int main(void) {
 		printf("[ ft_strlen ]  %s : length is %zd\n", str,  FT_STRLEN(str));
 	}
 
-	/*
 	{
 		printf("----------------------------\n");
 		printf("|  ft_strcpy               |\n");
@@ -54,16 +55,18 @@ int main(void) {
 		FT_STRCPY(dst, str);
 		printf("After  : %s\n", dst);
 	}
-	*/
-
 	{
 		printf("----------------------------\n");
 		printf("|  ft_write - with fd(-1)  |\n");
 		printf("----------------------------\n");
+		// (1)
 		ssize_t ret1 = write(-1, "hello\n", 6);
 		fprintf(stderr, "Return value of    write: %zd\n", ret1);
+		if (ret1 < 0) perror("Error printed by perror");
+		// (2)
 		ssize_t ret2 = FT_WRITE(-1, "hello\n", 6);
 		fprintf(stderr, "Return value of ft_write: %zd\n", ret2);
+		if (ret2 < 0) perror("Error printed by perror");
 	}
 	{
 		printf("----------------------------\n");
@@ -74,6 +77,24 @@ int main(void) {
 		ssize_t ret2 = FT_WRITE(1, "hello\n", 6);
 		fprintf(stderr, "Return value of ft_write: %zd\n", ret2);
 	}
+	{
+		char* buff = malloc(1000);
+		bzero(buff, 1000);
+		printf("----------------------------\n");
+		printf("|  ft_read - with fd(2)  |\n");
+		printf("----------------------------\n");
+		ssize_t ret1 = read(2, buff, 1000);
+		fprintf(stderr, "Result of Buff     read: %s\n", buff);
+		fprintf(stderr, "Return value of    read: %zd\n", ret1);
+		ssize_t ret2 = FT_READ(2, buff, 1000);
+		bzero(buff, 1000);
+		fprintf(stderr, "Result of Buff  ft_read: %s\n", buff);
+		fprintf(stderr, "Return value of ft_read: %zd\n", ret2);
+		free(buff);
+	}
+
+
+
 
 
 	return (0);
