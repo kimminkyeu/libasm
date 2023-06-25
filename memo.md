@@ -124,9 +124,11 @@ movb, movw, movl, movq의 4개 유형.
 pushq도 역시 64bit를 stack에 push한다는 말.
 
 ### 명령어 (mov와의 차이)
-lea : (load effective address)
+lea : (load effective address) --> 주소가 이동됨.
 
 - mov eax, dword ptr DS:[eax]
   eax 레지스터에 들어있는 값(=?주소값) 을 Data segment에서 가져온다.
   즉 eax는 여기서 포인터 역할.
   .data 세그멘트의 특정 주소를 참조, 그 곳의 4byte 값ㅐ을 eax에 넣는 명령어
+
+- cmp 명령어는 원본을 바꾸지 않는다.  (헷갈릴뻔)

@@ -10,22 +10,26 @@
 #ifdef __linux__
 	#define FT_STRLEN(x)		_ft_strlen(x)
 	#define FT_STRCPY(x, y)		_ft_strcpy(x, y)
+	#define FT_STRCMP(x, y)		_ft_strcmp(x, y)
 	#define FT_WRITE(x, y, z)	_ft_write(x, y, z)
 	#define FT_READ(x ,y, z)	_ft_read(x, y, z)
 	#define FT_STRDUP(x)		_ft_strdup(x)
 	extern size_t _ft_strlen(const char* str);
 	extern char * _ft_strcpy(char * dst, const char * src);
+	extern int _ft_strcmp(const char *s1, const char *s2);
 	extern ssize_t _ft_write(int fd, const void *buf, size_t count);
 	extern ssize_t _ft_read(int fd, void *buf, size_t count);
 	extern char * _ft_strdup(const char *s);
 #elif __APPLE__
 	#define FT_STRLEN(x)		ft_strlen(x)
 	#define FT_STRCPY(x, y)		ft_strcpy(x, y)
+	#define FT_STRCMP(x, y)		ft_strcmp(x, y)
 	#define FT_WRITE(x, y, z)	ft_write(x, y, z)
 	#define FT_READ(x ,y, z)	ft_read(x, y, z)
 	#define FT_STRDUP(x)		ft_strdup(x)
 	extern size_t ft_strlen(const char* str);
 	extern char * ft_strcpy(char * dst, const char * src);	
+	extern int ft_strcmp(const char *s1, const char *s2);
 	extern ssize_t ft_write(int fd, const void *buf, size_t count);
 	extern ssize_t ft_read(int fd, void *buf, size_t count); 
 	extern char * ft_strdup(const char *s);
@@ -33,6 +37,7 @@
 
 
 int main(void) {
+	/*
 	{
 		printf("----------------------------\n");
 		printf("|  ft_strlen               |\n");
@@ -41,7 +46,6 @@ int main(void) {
 		printf("[ strlen ]     %s : length is %zd\n", str,  strlen(str));
 		printf("[ ft_strlen ]  %s : length is %zd\n", str,  FT_STRLEN(str));
 	}
-
 	{
 		printf("----------------------------\n");
 		printf("|  ft_strcpy               |\n");
@@ -91,6 +95,26 @@ int main(void) {
 		fprintf(stderr, "Result of Buff  ft_read: %s\n", buff);
 		fprintf(stderr, "Return value of ft_read: %zd\n", ret2);
 		free(buff);
+	}
+	*/
+	{
+		const char* s1 = "hello";
+		const char* s2 = "helli";
+
+		int ret2 = FT_STRCMP(s1, s2);
+		int tmp = ret2;
+		return 0;
+		/** write(1, "test\n", 5); */
+		/** write(1, &ret2, 4); */
+		/*
+		printf("----------------------------\n");
+		printf("|  ft_strcmp               |\n");
+		printf("----------------------------\n");
+		printf("s1: %s\ns2: %s\n", s1, s2);
+		int ret1 = strcmp(s1, s2);
+		printf("[ strcmp    ] returns %d\n", ret1);
+		printf("[ ft_strcmp ] returns %d\n", ret2);
+		*/
 	}
 
 
