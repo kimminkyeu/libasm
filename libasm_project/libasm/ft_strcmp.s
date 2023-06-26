@@ -44,13 +44,13 @@ _inner_ft_strcmp:
 	mov rax, qword [rbp - 8] ; char* s1
 	movzx eax, byte [rax] ; edx = *s1
 	test al, al ; same as "cmp edx, 0"
-	je .PROC_RETURN
+	jz .PROC_RETURN ; same as je
 
  .PROC_CHECK_S2_NULL:
 	mov rax, qword [rbp - 16] ; char* s2
 	movzx eax, byte [rax] ; edx = *s2
 	test al, al ; same as "cmp edx, 0"
-	je .PROC_RETURN
+	jz .PROC_RETURN ; same as je
 
  .PROC_CHECK_S1_S2_EQUAL:
 	mov rax, qword [rbp - 8] ; char* s1
