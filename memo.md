@@ -132,3 +132,6 @@ lea : (load effective address) --> 주소가 이동됨.
   .data 세그멘트의 특정 주소를 참조, 그 곳의 4byte 값ㅐ을 eax에 넣는 명령어
 
 - cmp 명령어는 원본을 바꾸지 않는다.  (헷갈릴뻔)
+
+### mov는 dest와 src의 크기가 같아야 함.
+그러나, movzx / movsx를 쓰면 달라도 됨. 남아있는 공간을 0으로 씌워주기 떄문.

@@ -99,7 +99,7 @@ int main(void) {
 	*/
 	{
 		const char* s1 = "hello";
-		const char* s2 = "helli";
+		const char* s2 = "ha";
 
 		int ret2 = FT_STRCMP(s1, s2);
 		int tmp = ret2;

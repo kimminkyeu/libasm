@@ -58,14 +58,12 @@ _ft_strcmp:
 
 	xor rax, rax
 	xor rcx, rcx
-	movzx eax, byte [rbx] ;  save *s1_ptr char as int
-	movzx ecx, byte [rdx]
-	; movzx eax, al ; al 을 eax에 복사하고, 부족한 공간은 0으로 채움.
+	movsx eax, byte [rbx] ; save signed char (*s1) as int + 남은 공간 초기화 
+	movsx ecx, byte [rdx] ; save signed char (*s2) as int + 남은 공간 초기화
 
 	sub eax, ecx ; *s1_ptr - *s2_ptr to eax (4byte)
 
 	; EPILOGUE
-	; add rsp, 16
-	mov rsp, rbp
+	add rsp, 16
 	pop rbp
-	ret
+	ret 
