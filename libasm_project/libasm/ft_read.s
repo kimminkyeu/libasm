@@ -52,7 +52,7 @@ _ft_read:
  .PROC_SET_ERRNO:
     neg rax ; -N : N (2's compliment)
     mov rcx, rax ; save syscall return value to rcx (returns errno if failed)
-    call GET_ERRNO_PTR_TO_RAX
+    call GET_ERRNO_PTR_TO_RAX WRT ..plt ; https://www.nasm.us/xdoc/2.10rc8/html/nasmdoc9.html#section-9.2.5
     mov [rax], rcx ; save syscall result to rcx
     mov rax, -1 ; on error, return -1
     jmp _ft_read.PROC_END

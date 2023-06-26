@@ -1,5 +1,4 @@
-
-; int	ft_strcmp(const char *s1, const char *s2)
+; int   ft_strcmp(const char *s1, const char *s2)
 ; {
 ;     while (*s1 && *s2 && (*s1 == *s2))
 ;     {
@@ -8,62 +7,75 @@
 ;     return ((int)(*s1 - *s2));
 ; }
 
-
-BITS 64
+BITS 64 ; for vim syntastic
 
 section .text
 	global _ft_strcmp
 
+; (1) 왜 const unsigned char* 기준으로 하지 않았는지 설명할 것.
+; (2) int 반환할 때와 size_t 반환할 때 차이를 어떻게 asm에서 두지?
+; (3) 왜 clang은 byte spill 을 하고, gcc는 하지 않는거임.?
+
+; 이건 공부용. call stack이 어떻게 정리되는지 설명하기 위함.
+; 직접 그리면서 stack이 어떻게 변화하는지 설명할 것! 
+; gdb(or lldb) 도 함께 보기.
+
 _ft_strcmp:
+	endbr64
+	push rbp
+	mov rbp, rsp
+	call _inner_ft_strcmp ; 내부 함수 호출.
+	mov rsp, rbp
+	pop rbp
+	ret
+
+_inner_ft_strcmp:
+	; endbr64는 메모리 보호 기법으로 사용된다. (디버깅하다 발견)
+	endbr64 ; https://core-research-team.github.io/2020-05-01/memory
 	; PROLOGUE
 	push rbp
-	mov rsp, rbp
-
-	; LOCAL VAR
+	mov rbp, rsp
 	sub rsp, 16
 	mov qword [rbp - 8], rdi ; char* s1
 	mov qword [rbp - 16], rsi ; char* s2
+	jmp .PROC_CHECK_S1_NULL
 
- .PROC_LOOP:
-	; check if (*s1 && *s2). Else, return
-	xor rax, rax
-	xor rcx, rcx
-	mov rax, qword [rbp - 8] ; s1_uchar ptr
-	mov rcx, qword [rbp - 16] ; s2_uchar ptr
-	cmp byte [rax], 0 ; if (*s1 === '/0')
-	je _ft_strcmp.PROC_RETURN
-	cmp byte [rcx], 0 ; if (*s2 === '/0')
-	je _ft_strcmp.PROC_RETURN
+ .PROC_CHECK_S1_NULL:
+	mov rax, qword [rbp - 8] ; char* s1
+	movzx eax, byte [rax] ; edx = *s1
+	test al, al ; same as "cmp edx, 0"
+	je .PROC_RETURN
 
-	; check if (*s1 == *s2). Else, return
-	xor rbx, rbx
-	xor rdx, rdx
-	mov bl, byte [rax] ; *s1
-	mov dl, byte [rcx] ; *s2
-	cmp bl, dl ; AND bl, dl --> 0 if 
-	jne _ft_strcmp.PROC_RETURN
+ .PROC_CHECK_S2_NULL:
+	mov rax, qword [rbp - 16] ; char* s2
+	movzx eax, byte [rax] ; edx = *s2
+	test al, al ; same as "cmp edx, 0"
+	je .PROC_RETURN
 
-	; else, increment each, save to stack
-	add rax, 1 ; s1++
-	mov qword [rbp - 8], rax
-	add rcx, 1 ; s2++
-	mov qword [rbp - 16], rcx
-	jmp _ft_strcmp.PROC_LOOP
+ .PROC_CHECK_S1_S2_EQUAL:
+	mov rax, qword [rbp - 8] ; char* s1
+	movzx ecx, byte [rax] ; edx = 0 && ecx = *s1
+	mov rax, qword [rbp - 16] ; char* s2
+	movzx edx, byte [rax] ; edx = 0 && edx = *s2
+	cmp cl, dl ; same as "cmp ecx, edx"
+	jne .PROC_RETURN
+
+ .PROC_ADVANCE_EACH_PTR:
+	add qword [rbp - 8], 1 ; s1++
+	add qword [rbp - 16], 1 ; s2++
+	jmp .PROC_CHECK_S1_NULL
 
  .PROC_RETURN:
-	xor rbx, rbx
-	xor rdx, rdx
-	mov rbx, qword [rbp - 8] ; s1_uchar ptr
-	mov rdx, qword [rbp - 16] ; s2_uchar ptr
-
-	xor rax, rax
-	xor rcx, rcx
-	movsx eax, byte [rbx] ; save signed char (*s1) as int + 남은 공간 초기화 
-	movsx ecx, byte [rdx] ; save signed char (*s2) as int + 남은 공간 초기화
-
-	sub eax, ecx ; *s1_ptr - *s2_ptr to eax (4byte)
-
+	mov rax, qword [rbp - 8] ; char* s1
+	movzx eax, byte [rax] ; eax = 0 && eax = *s1
+	movsx edx, al ; edx = 0 && edx = al
+	mov rax, qword [rbp - 16] ; char* s2
+	movzx eax, byte [rax] ; eax = 0 && eax = *s2
+	movsx ecx, al ; ecx = 0 && ecx = al
+	mov eax, edx ; 
+	sub eax, ecx ; *s1 - *s2 (4byte)
 	; EPILOGUE
 	add rsp, 16
 	pop rbp
-	ret 
+	ret
+

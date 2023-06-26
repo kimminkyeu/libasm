@@ -37,7 +37,7 @@
 
 
 int main(void) {
-	/*
+
 	{
 		printf("----------------------------\n");
 		printf("|  ft_strlen               |\n");
@@ -83,41 +83,42 @@ int main(void) {
 	}
 	{
 		char* buff = malloc(1000);
-		bzero(buff, 1000);
 		printf("----------------------------\n");
 		printf("|  ft_read - with fd(2)  |\n");
 		printf("----------------------------\n");
+		bzero(buff, 1000);
 		ssize_t ret1 = read(2, buff, 1000);
 		fprintf(stderr, "Result of Buff     read: %s\n", buff);
 		fprintf(stderr, "Return value of    read: %zd\n", ret1);
-		ssize_t ret2 = FT_READ(2, buff, 1000);
 		bzero(buff, 1000);
+		ssize_t ret2 = FT_READ(2, buff, 1000);
 		fprintf(stderr, "Result of Buff  ft_read: %s\n", buff);
 		fprintf(stderr, "Return value of ft_read: %zd\n", ret2);
 		free(buff);
 	}
-	*/
 	{
 		const char* s1 = "hello";
 		const char* s2 = "ha";
-
-		int ret2 = FT_STRCMP(s1, s2);
-		int tmp = ret2;
-		return 0;
-		/** write(1, "test\n", 5); */
-		/** write(1, &ret2, 4); */
-		/*
 		printf("----------------------------\n");
 		printf("|  ft_strcmp               |\n");
 		printf("----------------------------\n");
 		printf("s1: %s\ns2: %s\n", s1, s2);
 		int ret1 = strcmp(s1, s2);
+		int ret2 = FT_STRCMP(s1, s2);
 		printf("[ strcmp    ] returns %d\n", ret1);
 		printf("[ ft_strcmp ] returns %d\n", ret2);
-		*/
 	}
 
-
+	{
+		printf("----------------------------\n");
+		printf("|  ft_strdup               |\n");
+		printf("----------------------------\n");
+		const char* str = "Hello, World! My name is kyeu~~!";
+		char* copy_string = FT_STRDUP(str);
+		printf("source: %s\n", str);
+		printf("copied: %s\n", copy_string);
+		free(copy_string);
+	}
 
 
 
