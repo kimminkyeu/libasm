@@ -67,12 +67,10 @@ _inner_ft_strcmp:
 
  .PROC_RETURN:
 	mov rax, qword [rbp - 8] ; char* s1
-	movzx eax, byte [rax] ; eax = 0 && eax = *s1
-	movsx edx, al ; edx = 0 && edx = al
+	movzx ebx, byte [rax] ; ebx = 0 && eax = *s1
 	mov rax, qword [rbp - 16] ; char* s2
-	movzx eax, byte [rax] ; eax = 0 && eax = *s2
-	movsx ecx, al ; ecx = 0 && ecx = al
-	mov eax, edx ; 
+	movzx ecx, byte [rax] ; ecx = 0 && eax = *s2
+	mov eax, ebx ; use eax to set return value
 	sub eax, ecx ; *s1 - *s2 (4byte)
 	; EPILOGUE
 	add rsp, 16

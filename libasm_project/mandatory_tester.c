@@ -84,16 +84,17 @@ int main(void) {
 	{
 		char* buff = malloc(1000);
 		printf("----------------------------\n");
-		printf("|  ft_read - with fd(2)  |\n");
+		printf("|  ft_read - with fd(0)  |\n");
 		printf("----------------------------\n");
 		bzero(buff, 1000);
-		ssize_t ret1 = read(2, buff, 1000);
+		ssize_t ret1 = read(0, buff, 1000);
 		fprintf(stderr, "Result of Buff     read: %s\n", buff);
 		fprintf(stderr, "Return value of    read: %zd\n", ret1);
 		bzero(buff, 1000);
-		ssize_t ret2 = FT_READ(2, buff, 1000);
+		ssize_t ret2 = FT_READ(0, buff, 1000);
 		fprintf(stderr, "Result of Buff  ft_read: %s\n", buff);
 		fprintf(stderr, "Return value of ft_read: %zd\n", ret2);
+
 		free(buff);
 	}
 	{

@@ -19,12 +19,12 @@ RM              = rm -f
 AR              = ar rcs 
 
 # mandatory
-SRC_MANDATORY        	= ft_strlen.s ft_strcpy.s ft_strcmp.s ft_write.s ft_read.s ft_strdup.s \
-OBJ_MANDATORY 			= $(SRC_MANDATORY:s=o)
+SRC_MANDATORY   = ft_strlen.s ft_strcpy.s ft_strcmp.s ft_write.s ft_read.s ft_strdup.s
+OBJ_MANDATORY   = $(SRC_MANDATORY:s=o)
 
 # bonus
-SRC_BONUS = \
-OBJ_BONUS 				= $(SRC_BONUS:s=o)
+SRC_BONUS       = ft_atoi_base.s ft_list_push_front.s ft_list_size.s ft_list_sort.s ft_list_remove_if.s
+OBJ_BONUS       = $(SRC_BONUS:s=o)
 
 # Keep makefile from relink
 ifdef WITH_BONUS
@@ -65,7 +65,7 @@ bonus:
 	make WITH_BONUS=1
 
 clean:
-	rm -rf $(OBJ)
+	rm -rf $(OBJ_RESULT)
 	@echo "$(CYAN)Libasm obj files has been deleted.$(DEF_COLOR)"
 
 fclean: clean
