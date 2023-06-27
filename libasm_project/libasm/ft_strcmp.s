@@ -12,16 +12,7 @@ BITS 64 ; for vim syntastic
 section .text
 	global _ft_strcmp
 
-; (1) 왜 const unsigned char* 기준으로 하지 않았는지 설명할 것.
-; (2) int 반환할 때와 size_t 반환할 때 차이를 어떻게 asm에서 두지?
-; (3) 왜 clang은 byte spill 을 하고, gcc는 하지 않는거임.?
-
-; 이건 공부용. call stack이 어떻게 정리되는지 설명하기 위함.
-; 직접 그리면서 stack이 어떻게 변화하는지 설명할 것! 
-; gdb(or lldb) 도 함께 보기.
-
 _ft_strcmp:
-	endbr64
 	push rbp
 	mov rbp, rsp
 	call _inner_ft_strcmp ; 내부 함수 호출.
@@ -30,8 +21,6 @@ _ft_strcmp:
 	ret
 
 _inner_ft_strcmp:
-	; endbr64는 메모리 보호 기법으로 사용된다. (디버깅하다 발견)
-	endbr64 ; https://core-research-team.github.io/2020-05-01/memory
 	; PROLOGUE
 	push rbp
 	mov rbp, rsp

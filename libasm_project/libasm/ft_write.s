@@ -54,9 +54,12 @@ _ft_write:
 
  .PROC_CHECK_ERROR___LINUX:
     cmp rax, 0 ;
-    neg rax ; -N : N (2's compliment)
-    jl _ft_write.PROC_SET_ERRNO
+    jl _ft_write.PROC_NEGATE_RAX___LINUX
     jmp _ft_write.PROC_END
+
+ .PROC_NEGATE_RAX___LINUX:
+    neg rax ; -N : N (2's compliment)
+    jmp _ft_write.PROC_SET_ERRNO
 
  .PROC_SET_ERRNO:
     ; FreeBSD의 __error 함수는 rcx, rax를 모두 쓰기 떄문에, call 이전에 미리 변수들을 stack에 저장해줘야 함.
