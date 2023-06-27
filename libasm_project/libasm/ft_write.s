@@ -7,12 +7,13 @@
 %ifdef __APPLE__
     ; - https://github.com/freebsd/freebsd-src/blob/master/sys/sys/errno.h
     extern  ___error ; defined in freeBSD errno.h header
-    %define GET_ERRNO_PTR_TO_RAX ___error
+    %define GET_ERRNO_PTR_TO_RAX    ___error
     SYS_READ        equ 0x02000003
     SYS_WRITE       equ 0x02000004
 %else
     extern  __errno_location ; defined in linux errno.h header
-    %define GET_ERRNO_PTR_TO_RAX __errno_location
+    %define GET_ERRNO_PTR_TO_RAX    __errno_location WRT ..plt
+    ; https://www.nasm.us/xdoc/2.10rc8/html/nasmdoc9.html#section-9.2.5
     SYS_READ        equ 0
     SYS_WRITE       equ 1
     ; ... 
@@ -52,7 +53,7 @@ _ft_write:
  .PROC_SET_ERRNO:
     neg rax ; -N : N (2's compliment)
     mov rcx, rax ; save syscall return value to rcx (returns errno if failed)
-    call GET_ERRNO_PTR_TO_RAX WRT ..plt ; https://www.nasm.us/xdoc/2.10rc8/html/nasmdoc9.html#section-9.2.5
+    call GET_ERRNO_PTR_TO_RAX
     mov [rax], rcx ; save syscall result to rcx
     mov rax, -1 ; on error, return -1
     jmp _ft_write.PROC_END

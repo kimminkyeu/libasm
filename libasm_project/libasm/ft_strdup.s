@@ -17,11 +17,21 @@
 ;     return (tmp);
 ; }
 
+
 BITS 64 ; for vim syntastic
 
 extern _ft_strlen 
 extern _ft_strcpy 
-extern malloc
+
+%ifdef __APPLE__
+    ; - https://github.com/freebsd/freebsd-src/blob/master/sys/sys/errno.h
+	extern _malloc
+    %define MALLOC		_malloc
+%else
+	extern malloc
+    %define MALLOC		malloc WRT ..plt 
+    ; https://www.nasm.us/xdoc/2.10rc8/html/nasmdoc9.html#section-9.2.5
+%endif
 
 ; ******************************************************************************************
 ; 찾은 링크: https://stackoverflow.com/questions/36007975/compile-error-relocation-r-x86-64-pc32-against-undefined-symbol
@@ -47,7 +57,7 @@ _ft_strdup:
 	; MALLOC
 	add rax, 1 ; size + 1
 	mov rdi, rax
-	call malloc WRT ..plt ; https://www.nasm.us/xdoc/2.10rc8/html/nasmdoc9.html#section-9.2.5
+	call MALLOC; https://www.nasm.us/xdoc/2.10rc8/html/nasmdoc9.html#section-9.2.5
 	mov qword [rbp - 24], rax ; save malloc result (char* tmp)
 	; CHECK IF TMP IS NULL
 	cmp rax, 0 ; if not 0, copy string

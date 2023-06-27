@@ -18,9 +18,20 @@ INCLUDE         = include
 RM              = rm -f
 AR              = ar rcs 
 
-SRC        		= ft_strlen.s ft_strcpy.s ft_strcmp.s ft_write.s ft_read.s ft_strdup.s \
+# mandatory
+SRC_MANDATORY        	= ft_strlen.s ft_strcpy.s ft_strcmp.s ft_write.s ft_read.s ft_strdup.s \
+OBJ_MANDATORY 			= $(SRC_MANDATORY:s=o)
 
-OBJ 			= $(SRC:s=o)
+# bonus
+SRC_BONUS = \
+OBJ_BONUS 				= $(SRC_BONUS:s=o)
+
+# Keep makefile from relink
+ifdef WITH_BONUS
+     OBJ_RESULT = $(OBJ_MANDATORY) $(OBJ_BONUS)
+else
+     OBJ_RESULT = $(OBJ_MANDATORY)
+endif
 
 
 # Colors
@@ -38,7 +49,7 @@ WHITE           = \033[0;97m
 # Rules 
 all: $(NAME)
 
-$(NAME): $(OBJ)
+$(NAME): $(OBJ_RESULT)
 	$(AR) $(NAME) $^
 	@echo "$(GREEN)----------------------------$(DEF_COLOR)"
 	@echo "$(GREEN)|                          |$(DEF_COLOR)"
@@ -50,12 +61,15 @@ $(NAME): $(OBJ)
 	$(NASM) $< -o $@
 	@echo "$(GREEN)Compiling with NASM ... \t$< $(DEF_COLOR)"
 
+bonus:
+	make WITH_BONUS=1
+
 clean:
-	@rm -rf $(OBJ)
+	rm -rf $(OBJ)
 	@echo "$(CYAN)Libasm obj files has been deleted.$(DEF_COLOR)"
 
 fclean: clean
-	@${RM} ${NAME}
+	${RM} ${NAME}
 	@echo "$(CYAN)Libasm archive files has been deleted.$(DEF_COLOR)"
 
 re: fclean all
