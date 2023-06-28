@@ -6,42 +6,50 @@
 /*   By: minkyeki <minkyeki@42SEOUL.KR>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 15:28:31 by minkyeki          #+#    #+#             */
-/*   Updated: 2023/06/28 01:41:09 by kyeu             ###   ########.fr       */
+/*   Updated: 2023/06/28 12:46:36 by minkyeki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stddef.h>
+#include <ctype.h>
 #include <string.h>
 #include <strings.h>
 
-void _skip_white_space(char* p_base)
+void skip_white_space(char* p_base)
 {
 	while (*p_base)
 	{
-		if (*p_base == '+' || *p_base == '-' \
-				|| (*p_base >= 9 && *p_base <= 13) || *p_base == ' ')
+		if (*p_base == '+' || *p_base == '-' || isspace(*p_base))
 			return;
 		++p_base;
 	}
 }
 
+// string이 모두 lookup에 존재한다면 true
 static int	check_if_string_matches_base(char *str, char *base)
 {
-	while (*base)
+	char *tmp;
+	while (*str)
 	{
-		if (*str == *base)
-			return (1);
-		++base;
+		tmp = base;
+		while (*tmp) {
+			if (*str != *tmp) // 하나라도 lookup에 없는 문자라면.
+				return (0);
+			++tmp;
+		}
+		++str;
 	}
-	return (0);
+	return (1);
 }
 
 
+// char base에 중복문자가 있으면 undefined로 처리.
 static size_t	is_valid_base(char* str, char* base)
 {
-	char	*p_base = base;
+	// backup
+	char	*base_start = base;
 
-	_skip_white_space(p_base);
+	skip_white_space(base);
 	size_t t = strlen(base);
 
 	char lookUp[t + 1]; // 마지막 null화
@@ -49,12 +57,13 @@ static size_t	is_valid_base(char* str, char* base)
 
 	size_t  size_of_lookUp = 0;
 
-	while (*base) {
+	while (*str) {
 		char current_char = *base;
 		size_t i = 0;
 		// scan lookUp table
-		while (i < size_of_lookUp) 
+		while (i < size_of_lookUp)
 		{
+			// 중복 검사.
 			if (lookUp[i] == current_char) return (0);
 			++i;
 		}
@@ -64,7 +73,9 @@ static size_t	is_valid_base(char* str, char* base)
 	}
 
 	// 마지막으로 str 문자열의 내용이 모두 lookUp에 존재하는지 체크
-	check_if_string_matches_base(str, lookUp);
+	if (!check_if_string_matches_base(str, base_start)) 
+		return (0);
+
 	// if every char is unique, then OK>
 	return (size_of_lookUp);
 }
@@ -85,11 +96,6 @@ static int	find_base_index(char target, char *base)
 	return (0);
 }
 
-void skip_white_space(char *str)
-{
-	while (*str && ((*str == ' ') || (*str >= 9 && *str <= 13)))
-		++str;
-}
 
 char get_sign_val(char *str)
 {
